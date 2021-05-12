@@ -3,20 +3,19 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
-
-import postRoutes from './routes/posts.js';
+import dotenv from 'dotenv'
 import userRouter from "./routes/user.js";
 
 const app = express();
-
+dotenv.config();
 app.use(express.json({ limit: '30mb', extended: true }))
 app.use(express.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors());
 
-app.use('/posts', postRoutes);
+
 app.use("/user", userRouter);
 
-const CONNECTION_URL = 'mongodb+srv://vishesh368:vishesh368@cluster0.tdbwg.mongodb.net/<dbname>?retryWrites=true&w=majority';
+const CONNECTION_URL = process.env.MONGO_URI
 const PORT = process.env.PORT|| 8000;
 
 mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
