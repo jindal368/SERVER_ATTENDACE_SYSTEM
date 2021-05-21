@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv'
 import userRouter from "./routes/user.js";
+import attendanceRouter from './routes/attendance.js'
 
 const app = express();
 dotenv.config();
@@ -14,6 +15,7 @@ app.use(cors());
 
 
 app.use("/user", userRouter);
+app.use("/attendance", attendanceRouter);
 
 const CONNECTION_URL = process.env.MONGO_URI
 const PORT = process.env.PORT|| 8000;
