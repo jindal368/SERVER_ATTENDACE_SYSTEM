@@ -1,5 +1,11 @@
 import mongoose from "mongoose";
 
+const studentAttendance = mongoose.Schema({
+  semester:{type: Number,required:true},
+  dateTime:{type: Date, required:true},
+  subject:{type: String,required:true}
+});
+
 const studentSchema = mongoose.Schema({
   course:{type: String,required: true},
   year:{type: Number, required:true,length:1, min:1},
@@ -12,12 +18,6 @@ const studentSchema = mongoose.Schema({
   mobile:{type:Number,required:true},
   fathersMobile:{type:Number},
   attendance:[studentAttendance]
-});
-
-const studentAttendance = mongoose.Schema({
-  semester:{type: Number,required:true},
-  dateTime:{type: Date, required:true},
-  subject:{type: String,required:true}
 });
 
 

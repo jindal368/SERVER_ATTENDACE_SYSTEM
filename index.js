@@ -1,11 +1,11 @@
 
 import express from 'express';
-import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
+import {connect,disconnect} from "./utils/dbUtils.js";
 import cors from 'cors';
 import dotenv from 'dotenv'
 import userRouter from "./routes/user.js";
-import attendanceRouter from './routes/attendance.js'
+import attendanceRouter from './routes/attendance.js';
+import StudentRouter from "./routes/student.js";
 
 const app = express();
 dotenv.config();
@@ -16,12 +16,18 @@ app.use(cors());
 
 app.use("/user", userRouter);
 app.use("/attendance", attendanceRouter);
+app.use("/student",StudentRouter);
 
-const CONNECTION_URL = process.env.MONGO_URI
 const PORT = process.env.PORT||9010;
+app.listen(PORT, () => {
+  console.log(`app is running :: listening at http://localhost:${PORT}/`);
+  connect()
+  .then(()=>{
+    console.log('Successsfully connected to database');
+  })
+  .catch((err)=>{
+    console.log(`Unable to connect to db : ${err}`);
+  })
+});
 
-mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)))
-  .catch((error) => console.log(`${error} did not connect`));
 
-mongoose.set('useFindAndModify', false);
