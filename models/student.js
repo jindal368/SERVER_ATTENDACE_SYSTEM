@@ -2,11 +2,11 @@
 
 import mongoose from "mongoose";
 
-// const studentAttendance = mongoose.Schema({
-//   semester: { type: Number, required: true },
-//   dateTime: { type: Date, required: true },
-//   subject: { type: String, required: true },
-// });
+const studentAttendance = mongoose.Schema({
+  semester:{type: Number,required:true},
+  dateTime:{type: Date, required:true},
+  subject:{type: String,required:true}
+});
 
 const studentSchema = mongoose.Schema({
   course: { type: String, required: true },
@@ -17,9 +17,11 @@ const studentSchema = mongoose.Schema({
   rollNo: { type: Number, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  mobile: { type: Number, required: true },
-  fathersMobile: { type: Number },
-  attendance: { type: Array },
+  mobile:{type:Number,required:true},
+  fathersMobile:{type:Number},
+  attendance:[studentAttendance]
 });
+
+
 
 export default mongoose.model("Student", studentSchema);
