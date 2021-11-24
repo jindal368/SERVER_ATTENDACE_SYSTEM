@@ -7,6 +7,8 @@ import dotenv from 'dotenv'
 import userRouter from "./routes/user.js";
 import attendanceRouter from './routes/attendance.js';
 import StudentRouter from "./routes/student.js";
+import subjectRouter from "./routes/subject.js";
+import facultyRouter from "./routes/faculty.js";
 
 const app = express();
 dotenv.config();
@@ -18,6 +20,7 @@ app.use("/user", userRouter);
 app.use("/faculty", facultyRouter);
 app.use("/attendance", attendanceRouter);
 app.use("/student",StudentRouter);
+app.use("/subject",subjectRouter);
 
 const PORT = process.env.PORT||9010;
 app.listen(PORT, () => {

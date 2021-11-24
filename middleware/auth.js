@@ -1,11 +1,14 @@
 /** @format */
 
 import jwt from "jsonwebtoken";
+import HttpStatus from "http-status-codes";
 
 const secret = "test";
 
 const auth = async (req, res, next) => {
   try {
+    if(!req.headers.authorization)
+      res.status(HttpStatus.BAD_REQUEST).send({message:"auth token not found"});
     const token = req.headers.authorization.split(" ")[1];
     const isCustomAuth = token.length < 500;
 
@@ -23,7 +26,8 @@ const auth = async (req, res, next) => {
     console.log("middle : ", req.userId);
     next();
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
+    res.status(HttpStatus.BAD_REQUEST).send({message:error.message});
   }
 };
 

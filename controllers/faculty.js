@@ -31,7 +31,7 @@ export const signin = async (req, res) => {
     const token = jwt.sign(
       { email: oldFaculty.email, id: oldFaculty._id },
       secret,
-      { expiresIn: "1h" }
+      { expiresIn: "1d" }
     );
 
     res.status(200).json({ result: oldFaculty, token });
@@ -62,7 +62,7 @@ export const signup = async (req, res) => {
     });
 
     const token = jwt.sign({ email: result.email, id: result._id }, secret, {
-      expiresIn: "1h",
+      expiresIn: "1d",
     });
 
     res.status(201).json({ result, token });
@@ -93,7 +93,7 @@ export const deleteFaculty = async (req, res) => {
   }
 };
 
-const isAdminById = async (id) => {
+export const isAdminById = async (id) => {
   return await facultyModal
     .findById(id)
     .then((res) => res.isAdmin)
@@ -127,6 +127,7 @@ export const makeAdmin = async (req, res) => {
     console.log(error);
   }
 };
+
 export const removeAdmin = async (req, res) => {
   try {
     const { email } = req.query;
