@@ -2,17 +2,19 @@
 
 import AttendanceModal from "../models/attendance.js";
 import studentModal from "../models/student.js";
-
+import { isAdminById } from "./faculty.js";
 export const postAttendanceData = async (req, res) => {
-  const { faculty, subject, year, semester, section, course } = req.body;
+  const { id } = req.query;
+  const { facultyEmail, subject, year, semester, section, course } = req.body;
   try {
     const data = {
-      faculty,
+      facultyEmail,
       subject,
       year,
       semester,
       section,
       course,
+      collegeId: id,
     };
 
     const attendanceSchema = await AttendanceModal.create(data);
@@ -28,18 +30,40 @@ export const updateStudent = async (req, res) => {
     const { _id, email } = req.query;
     if (await verfiyStudent(_id, email)) {
       const studentData = await studentModal.findOne({ email });
+      const updatedStudentData = {
+        email: studentData.email,
+        name: studentData.name,
+        course: studentData.course,
+        year: studentData.year,
+        semester: studentData.semester,
+        section: studentData.section,
+        rollNo: studentData.rollNo,
+        mobile: studentData.mobile,
+        fathersMobile: studentData.fathersMobile,
+      };
       const updatedSchema = await AttendanceModal.updateOne(
         { _id: req.query._id },
-        { $addToSet: { students: studentData } }
+        { $addToSet: { students: updatedStudentData } }
       );
       const paramsForStudent = await AttendanceModal.findById(_id);
+      const updatedParamsForStudent = {
+        facultyEmail: paramsForStudent.facultyEmail,
+        subject: paramsForStudent.subject,
+        year: paramsForStudent.year,
+        semester: paramsForStudent.semester,
+        section: paramsForStudent.section,
+        course: paramsForStudent.course,
+        date: paramsForStudent.date,
+      };
       const updatedStudent = await studentModal.updateOne(
         { email: email },
-        { $addToSet: { attendance: paramsForStudent } }
+        { $addToSet: { attendance: updatedParamsForStudent } }
       );
-      res
-        .status(200)
-        .json({ message: "Student Added Successfully", updatedSchema });
+      res.status(200).json({
+        message: "Student Added Successfully",
+        updatedSchema,
+        updatedStudent,
+      });
       console.log("Added Student", updatedSchema);
     } else {
       res.status(400).json({
@@ -52,19 +76,54 @@ export const updateStudent = async (req, res) => {
     console.log("Error : ", err);
   }
 };
-export const getStudentData = async (req, res) => {
-  const email = req.params.email;
-  console.log("email on backend : ", email);
-  AttendanceModal.find({ email })
-    .then((data) => {
-      console.log("Data is rendering", data);
-      res.json({ data });
-    })
-    .catch((err) => {
-      console.log("Error : ", err);
-    });
+export const getStudentDataToFacultyParticularSubject = async (req, res) => {
+  const { id } = req.query;
+  try {
+    const attendanceSchema = await AttendanceModal.findById(id);
+    if (!attendanceSchema) res.status(400).json({ message: "No Data Found" });
+    res.status(200).json({ attendanceSchema });
+  } catch (error) {
+    console.log("Error : ", error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
 };
 
+export const getAllTheirAttendanceFaculty = async (req, res) => {
+  const { email } = req.query;
+  try {
+    const attendanceSchema = await AttendanceModal.find({
+      facultyEmail: email,
+    });
+    if (!attendanceSchema) res.status(400).json({ message: "No Data Found" });
+    res.status(200).json({ attendanceSchema });
+  } catch (error) {
+    console.log("Error : ", error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
+export const getAttendanceDetailToAdmin = async (req, res) => {
+  const { subject, year, semester, section, course } = req.query;
+  try {
+    if (await isAdminById(req.userId)) {
+      const attendanceSchema = await AttendanceModal.find({
+        subject,
+        year,
+        semester,
+        section,
+        course,
+      });
+      if (!attendanceSchema) res.status(400).json({ message: "No Data Found" });
+      res.status(200).json({ attendanceSchema });
+    } else {
+      res
+        .status(400)
+        .json({ message: "User doesn't have privillages to access" });
+    }
+  } catch (error) {
+    console.log("Error : ", error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
 const verfiyStudent = async (id, email) => {
   try {
     const attendanceSchema = await AttendanceModal.findById(id);
@@ -74,7 +133,8 @@ const verfiyStudent = async (id, email) => {
     if (!studentData || !attendanceSchema) return false;
     if (
       studentData.semester === attendanceSchema.semester &&
-      studentData.section === attendanceSchema.section
+      studentData.section === attendanceSchema.section &&
+      studentData.collegeId === attendanceSchema.collegeId
     )
       return true;
     else return false;

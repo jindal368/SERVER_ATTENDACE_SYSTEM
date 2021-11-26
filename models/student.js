@@ -9,6 +9,7 @@ import mongoose from "mongoose";
 // });
 
 const studentSchema = mongoose.Schema({
+  collegeId: { type: String, required: true },
   course: { type: String, required: true },
   year: { type: Number, required: true, length: 1, min: 1 },
   semester: { type: Number, required: true, min: 1 },

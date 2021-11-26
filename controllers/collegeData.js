@@ -59,6 +59,7 @@ export const addInitialAdmin = async (req, res) => {
       mobile,
       address,
       department,
+      collegeId: id,
       isAdmin: "true",
     });
 

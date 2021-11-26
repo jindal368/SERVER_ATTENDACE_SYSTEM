@@ -30,13 +30,14 @@ export const signin = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.status(200).json({ result: oldstudent, token });
+    res.status(200).json({ token });
   } catch (err) {
     res.status(500).json({ message: "Something went wrong" });
   }
 };
 
 export const signup = async (req, res) => {
+  const { id } = req.query;
   const {
     email,
     password,
@@ -70,6 +71,7 @@ export const signup = async (req, res) => {
       rollNo,
       mobile,
       fathersMobile,
+      collegeId: id,
     });
 
     const token = jwt.sign({ email: result.email, id: result._id }, secret, {
@@ -81,5 +83,18 @@ export const signup = async (req, res) => {
     res.status(500).json({ message: "Something went wrong" });
 
     console.log(error);
+  }
+};
+export const getAttendanceToStudent = async (req, res) => {
+  try {
+    if (!req.userId)
+      res.status(400).json({ message: "user must be logged in to access" });
+    const attendanceSchema = await studentModal.findById(req.userId);
+    if (!attendanceSchema) res.status(400).json({ message: "No Data Found" });
+    const studentAttendanceData = attendanceSchema.attendance;
+    res.status(200).json({ studentAttendanceData });
+  } catch (error) {
+    console.log("Error : ", error);
+    res.status(500).json({ message: "Something went wrong" });
   }
 };
