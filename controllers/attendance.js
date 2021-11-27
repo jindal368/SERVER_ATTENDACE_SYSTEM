@@ -1,10 +1,12 @@
 /** @format */
+// API to deactivate listing by making filed deactivate in schemaa...
 
 import AttendanceModal from "../models/attendance.js";
 import studentModal from "../models/student.js";
 import { isAdminById } from "./faculty.js";
+import { distanceBW } from "../util/distanceBW.js";
 export const postAttendanceData = async (req, res) => {
-  const { id } = req.query;
+  const { id, latitude, longitude } = req.query;
   const { facultyEmail, subject, year, semester, section, course } = req.body;
   try {
     const data = {
@@ -15,6 +17,8 @@ export const postAttendanceData = async (req, res) => {
       section,
       course,
       collegeId: id,
+      latitude: latitude,
+      longitude: longitude,
     };
 
     const attendanceSchema = await AttendanceModal.create(data);
@@ -30,6 +34,28 @@ export const updateStudent = async (req, res) => {
     const { _id, email } = req.query;
     if (await verfiyStudent(_id, email)) {
       const studentData = await studentModal.findOne({ email });
+      const paramsForStudent = await AttendanceModal.findById(_id);
+      // check for expiry of listing
+
+      if (paramsForStudent.expire)
+        res.status(400).json({
+          message: "Subject listing is expired",
+        });
+      const distance =
+        distanceBW(
+          studentData.currentLatitude,
+          paramsForStudent.latitude,
+          studentData.currentLongitude,
+          paramsForStudent.longitude
+        ) * 1000;
+      // check location
+      if (distance > 10) {
+        res.status(400).json({
+          message:
+            "Student is out of class network , so attendance cannot be mark",
+          distance,
+        });
+      }
       const updatedStudentData = {
         email: studentData.email,
         name: studentData.name,
@@ -45,7 +71,7 @@ export const updateStudent = async (req, res) => {
         { _id: req.query._id },
         { $addToSet: { students: updatedStudentData } }
       );
-      const paramsForStudent = await AttendanceModal.findById(_id);
+
       const updatedParamsForStudent = {
         facultyEmail: paramsForStudent.facultyEmail,
         subject: paramsForStudent.subject,
@@ -63,6 +89,7 @@ export const updateStudent = async (req, res) => {
         message: "Student Added Successfully",
         updatedSchema,
         updatedStudent,
+        distance,
       });
       console.log("Added Student", updatedSchema);
     } else {
@@ -140,5 +167,27 @@ const verfiyStudent = async (id, email) => {
     else return false;
   } catch (error) {
     return false;
+  }
+};
+
+export const expireRetriveSubjectListing = async (req, res) => {
+  const { id } = req.query;
+  try {
+    const attendanceSchema = await AttendanceModal.findById(id);
+    if (!attendanceSchema) res.status(400).json({ message: "No Data Found" });
+    const updatedSchema = await AttendanceModal.updateOne(
+      { _id: id },
+      { $set: { expire: !attendanceSchema.expire } }
+    );
+    res
+      .status(200)
+      .json({
+        message: !attendanceSchema.expire
+          ? "expired Successfully"
+          : "retreve Successfully",
+      });
+  } catch (error) {
+    console.log("Error : ", error);
+    res.status(500).json({ message: "Something went wrong" });
   }
 };

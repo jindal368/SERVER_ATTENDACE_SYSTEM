@@ -9,6 +9,7 @@ import {
   getStudentDataToFacultyParticularSubject,
   getAttendanceDetailToAdmin,
   updateStudent,
+  expireRetriveSubjectListing,
 } from "../controllers/attendance.js";
 import auth from "../middleware/auth.js";
 
@@ -21,5 +22,6 @@ router.get(
 router.get("/getdetailtoadmin", auth, getAttendanceDetailToAdmin);
 router.get("/fetchalllistbyfaculty", auth, getAllTheirAttendanceFaculty);
 router.patch("/updatestudent", auth, updateStudent);
+router.put("/expiresubject", auth, expireRetriveSubjectListing);
 
 export default router;

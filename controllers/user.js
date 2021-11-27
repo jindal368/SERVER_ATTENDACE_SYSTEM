@@ -8,6 +8,7 @@ import studentModal from "../models/student.js";
 const secret = "test";
 
 export const signin = async (req, res) => {
+  const { latitude, longitude } = req.query;
   const { email, password } = req.body;
 
   try {
@@ -23,21 +24,25 @@ export const signin = async (req, res) => {
 
     if (!isPasswordCorrect)
       return res.status(400).json({ message: "Invalid credentials" });
+    const updatedSchema = await studentModal.updateOne(
+      { email: email },
+      { $set: { currentLatitude: latitude, currentLongitude: longitude } }
+    );
 
     const token = jwt.sign(
       { email: oldstudent.email, id: oldstudent._id },
       secret,
-      { expiresIn: "1h" }
+      { expiresIn: "0.1h" }
     );
 
-    res.status(200).json({ token });
+    res.status(200).json({ token, updatedSchema });
   } catch (err) {
     res.status(500).json({ message: "Something went wrong" });
   }
 };
 
 export const signup = async (req, res) => {
-  const { id } = req.query;
+  const { id, latitude, longitude } = req.query;
   const {
     email,
     password,
@@ -72,10 +77,12 @@ export const signup = async (req, res) => {
       mobile,
       fathersMobile,
       collegeId: id,
+      currentLatitude: latitude,
+      currentLongitude: longitude,
     });
 
     const token = jwt.sign({ email: result.email, id: result._id }, secret, {
-      expiresIn: "1h",
+      expiresIn: "0.1h",
     });
 
     res.status(201).json({ result, token });

@@ -21,6 +21,8 @@ const studentSchema = mongoose.Schema({
   mobile: { type: Number, required: true },
   fathersMobile: { type: Number },
   attendance: { type: Array },
+  currentLatitude: { type: Number, required: true },
+  currentLongitude: { type: Number, required: true },
 });
 
 export default mongoose.model("Student", studentSchema);
