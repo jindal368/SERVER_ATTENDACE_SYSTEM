@@ -9,6 +9,7 @@ import userRouter from "./routes/user.js";
 import attendanceRouter from "./routes/attendance.js";
 import facultyRouter from "./routes/faculty.js";
 import collegeRouter from "./routes/college.js";
+import subjectRouter from "./routes/subject.js";
 const app = express();
 dotenv.config();
 app.use(express.json({ limit: "30mb", extended: true }));
@@ -19,6 +20,7 @@ app.use("/user", userRouter);
 app.use("/faculty", facultyRouter);
 app.use("/attendance", attendanceRouter);
 app.use("/college", collegeRouter);
+app.use("/subject", subjectRouter);
 
 const CONNECTION_URL = process.env.MONGO_URI;
 const PORT = process.env.PORT || 9010;
