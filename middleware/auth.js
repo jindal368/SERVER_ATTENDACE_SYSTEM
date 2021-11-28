@@ -6,6 +6,8 @@ const secret = "test";
 
 const auth = async (req, res, next) => {
   try {
+    if (!req.headers.authorization)
+      res.status(400).json({ message: "Please add auth token" });
     const token = req.headers.authorization.split(" ")[1];
     const isCustomAuth = token.length < 500;
 
@@ -24,6 +26,7 @@ const auth = async (req, res, next) => {
     next();
   } catch (error) {
     console.log(error);
+    res.status(500).json({ message: "Something went Wrong" });
   }
 };
 

@@ -5,13 +5,23 @@ const router = express.Router();
 
 import {
   postAttendanceData,
-  getStudentData,
+  getAllTheirAttendanceFaculty,
+  getStudentDataToFacultyParticularSubject,
+  getAttendanceDetailToAdmin,
   updateStudent,
+  expireRetriveSubjectListing,
 } from "../controllers/attendance.js";
 import auth from "../middleware/auth.js";
 
 router.post("/postattendancedata", auth, postAttendanceData);
-router.get("/getstudentdata/:email", auth, getStudentData);
+router.get(
+  "/getattendancebyid",
+  auth,
+  getStudentDataToFacultyParticularSubject
+);
+router.get("/getdetailtoadmin", auth, getAttendanceDetailToAdmin);
+router.get("/fetchalllistbyfaculty", auth, getAllTheirAttendanceFaculty);
 router.patch("/updatestudent", auth, updateStudent);
+router.put("/expiresubject", auth, expireRetriveSubjectListing);
 
 export default router;

@@ -9,6 +9,7 @@ import mongoose from "mongoose";
 // });
 
 const studentSchema = mongoose.Schema({
+  collegeId: { type: String, required: true },
   course: { type: String, required: true },
   year: { type: Number, required: true, length: 1, min: 1 },
   semester: { type: Number, required: true, min: 1 },
@@ -20,6 +21,8 @@ const studentSchema = mongoose.Schema({
   mobile: { type: Number, required: true },
   fathersMobile: { type: Number },
   attendance: { type: Array },
+  currentLatitude: { type: Number, required: true },
+  currentLongitude: { type: Number, required: true },
 });
 
 export default mongoose.model("Student", studentSchema);

@@ -41,31 +41,39 @@ export const signin = async (req, res) => {
 };
 
 export const signup = async (req, res) => {
+  const { id } = req.query;
   const { email, password, firstName, lastName, mobile, address, department } =
     req.body;
 
   try {
-    const oldFaculty = await facultyModal.findOne({ email });
+    if (await isAdminById(req.userId)) {
+      const oldFaculty = await facultyModal.findOne({ email });
 
-    if (oldFaculty)
-      return res.status(400).json({ message: "faculty already exists" });
+      if (oldFaculty)
+        return res.status(400).json({ message: "faculty already exists" });
 
-    const hashedPassword = await bcrypt.hash(password, 12);
+      const hashedPassword = await bcrypt.hash(password, 12);
 
-    const result = await facultyModal.create({
-      email,
-      password: hashedPassword,
-      name: `${firstName} ${lastName}`,
-      mobile,
-      address,
-      department,
-    });
+      const result = await facultyModal.create({
+        email,
+        password: hashedPassword,
+        name: `${firstName} ${lastName}`,
+        mobile,
+        address,
+        collegeId: id,
+        department,
+      });
 
-    const token = jwt.sign({ email: result.email, id: result._id }, secret, {
-      expiresIn: "1h",
-    });
+      const token = jwt.sign({ email: result.email, id: result._id }, secret, {
+        expiresIn: "1h",
+      });
 
-    res.status(201).json({ result, token });
+      res.status(201).json({ result, token });
+    } else {
+      res.status(400).json({
+        message: "Logged in user doesn't have privillages to add faculty",
+      });
+    }
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
 
@@ -93,7 +101,7 @@ export const deleteFaculty = async (req, res) => {
   }
 };
 
-const isAdminById = async (id) => {
+export const isAdminById = async (id) => {
   return await facultyModal
     .findById(id)
     .then((res) => res.isAdmin)
@@ -153,5 +161,16 @@ export const removeAdmin = async (req, res) => {
     res.status(500).json({ message: "Something went wrong" });
 
     console.log(error);
+  }
+};
+export const getFacultyByCollege = async (req, res) => {
+  const { collegeId } = req.query;
+  try {
+    const facultySchema = await facultyModal.find({ collegeId });
+    if (!facultySchema) res.status(400).json({ message: "NO Data Found" });
+    res.status(200).json({ facultySchema });
+  } catch (error) {
+    console.log("Error : ", error);
+    res.status(500).json({ message: "Something Went wrong" });
   }
 };

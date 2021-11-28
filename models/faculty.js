@@ -11,6 +11,7 @@ const facultySchema = mongoose.Schema({
   address: { type: String, required: true },
   department: { type: String, required: true },
   isAdmin: { type: Boolean, default: false },
+  collegeId: { type: String, required: true },
 });
 
 export default mongoose.model("Faculty", facultySchema);
