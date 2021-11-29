@@ -1,11 +1,15 @@
 /** @format */
-
+import dotenv from "dotenv";
+dotenv.config();
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import logger from "../utils/logger.js";
+import { sendVerificationMail } from "../utils/apiUtils.js";
 
 import studentModal from "../models/student.js";
 
-const secret = "test";
+const loginsecret = process.env.LOGIN_SECRET;
+const emailsecret = process.env.EMAIL_SECRET;
 
 export const signin = async (req, res) => {
   const { email, password } = req.body;
@@ -26,7 +30,7 @@ export const signin = async (req, res) => {
 
     const token = jwt.sign(
       { email: oldstudent.email, id: oldstudent._id },
-      secret,
+      loginsecret,
       { expiresIn: "1d" }
     );
 
@@ -72,14 +76,29 @@ export const signup = async (req, res) => {
       fathersMobile,
     });
 
-    const token = jwt.sign({ email: result.email, id: result._id }, secret, {
+    const token = jwt.sign({ email: result.email, id: result._id }, emailsecret, {
       expiresIn: "1d",
     });
 
-    res.status(201).json({ result, token });
+    const response = await sendVerificationMail(result.email, token);
+    logger.debug(`verification mail sent to ${email}.`)
+    res.status(201).json({ result, message: `verification mail sent to ${email}. Please go and verify the account to enjoy services.` });
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
-
-    console.log(error);
+    logger.error(error);
+    res.status(500).json({ message: `Something went wrong. ${error.message}` });
   }
 };
+
+
+export const verifyEmail=(req,res)=>{
+  logger.debug('verifying the user, inside verifyEmail')
+  studentModal.findByIdAndUpdate(req.userId,{$set:{isVerified:true}},{new:true})
+  .then((resp)=>{
+    logger.debug(`Account of ${resp.name} is verified`);
+    res.status(201).json({message: `Account verified successfully` });
+  })
+  .catch((err)=>{
+    logger.error(err);
+    res.status(500).json({ message: `Something went wrong. ${err.message}` });
+  })
+}

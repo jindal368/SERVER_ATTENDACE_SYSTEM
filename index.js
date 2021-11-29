@@ -9,6 +9,7 @@ import attendanceRouter from './routes/attendance.js';
 import StudentRouter from "./routes/student.js";
 import subjectRouter from "./routes/subject.js";
 import facultyRouter from "./routes/faculty.js";
+import logger from "./utils/logger.js";
 
 const app = express();
 dotenv.config();
@@ -24,13 +25,13 @@ app.use("/subject",subjectRouter);
 
 const PORT = process.env.PORT||9010;
 app.listen(PORT, () => {
-  console.log(`app is running :: listening at http://localhost:${PORT}/`);
+  logger.debug(`app is running :: listening at http://localhost:${PORT}/`);
   connect()
   .then(()=>{
-    console.log('Successsfully connected to database');
+    logger.debug('Successsfully connected to database');
   })
   .catch((err)=>{
-    console.log(`Unable to connect to db : ${err}`);
+    logger.error(`Unable to connect to db : ${err}`);
   })
 });
 

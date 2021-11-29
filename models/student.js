@@ -19,6 +19,7 @@ const studentSchema = mongoose.Schema({
   password: { type: String, required: true },
   mobile:{type:Number,required:true},
   fathersMobile:{type:Number},
+  isVerified:{type : Boolean, required:true, default:false},
   attendance:[studentAttendance]
 });
 

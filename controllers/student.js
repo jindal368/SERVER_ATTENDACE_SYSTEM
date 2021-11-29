@@ -29,13 +29,16 @@ import globalConstants from "../utils/globalConstants.js";
 
 
 export const getStudent=(req,res)=>{
-    const rollNo=req.params.rollNo;
-    StudentModal.findOne({rollNo})
-    .then((student)=>{
-        if(student==null)
-            return Promise.reject("Student does not exists");
-        else
-            res.status(HttpStatus.OK).send({message:"Student data fetched successfully",student});
+    verifyStudent(req.userId)
+    .then(()=>{
+        const rollNo=req.params.rollNo;
+        StudentModal.findOne({rollNo})
+        .then((student)=>{
+            if(student==null)
+                return Promise.reject("Student does not exists");
+            else
+                res.status(HttpStatus.OK).send({message:"Student data fetched successfully",student});
+        })
     })
     .catch((err)=>{
         res.status(HttpStatus.BAD_REQUEST).send({message:err});
@@ -47,15 +50,33 @@ export const updateStudent=(req,res)=>{
 }
 
 export const studentAttendance=(req,res)=>{
-    const rollNo=req.params.rollNo;
-    StudentModal.findOne({rollNo})
-    .then((student)=>{
-        if(student==null)
-            return Promise.reject("Student does not exists");
-        else
-            res.status(HttpStatus.OK).send({message:"Student attendance fetched successfully",attendance:student.attendance});
+    verifyStudent(req.userId)
+    .then(()=>{
+        const rollNo=req.params.rollNo;
+        StudentModal.findOne({rollNo})
+        .then((student)=>{
+            if(student==null)
+                return Promise.reject("Student does not exists");
+            else
+                res.status(HttpStatus.OK).send({message:"Student attendance fetched successfully",attendance:student.attendance});
+        })
     })
     .catch((err)=>{
         res.status(HttpStatus.BAD_REQUEST).send({message:err});
+    })
+}
+
+const verifyStudent=(id)=>{
+    return new Promise((resolve,reject)=>{
+        StudentModal.findById(id)
+        .then((res)=>{
+            if(res!=null && res.isVerified)
+                resolve();
+            else    
+                reject("Student not verified, please verify your account");
+        })
+        .catch((err)=>{
+            reject(err);
+        })
     })
 }

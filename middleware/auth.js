@@ -1,9 +1,10 @@
 /** @format */
-
+import dotenv from "dotenv";
+dotenv.config();
 import jwt from "jsonwebtoken";
 import HttpStatus from "http-status-codes";
 
-const secret = "test";
+const secret = process.env.LOGIN_SECRET;
 
 const auth = async (req, res, next) => {
   try {
