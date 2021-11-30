@@ -5,14 +5,15 @@ import HttpStatus from "http-status-codes";
 import logger from "../utils/logger.js";
 
 const verify_email_token=(req,res,next)=>{
-    logger.debug('authenticating the email token')
+    logger.debug('authenticating the token')
     if(!req.headers.authorization)
       res.status(HttpStatus.BAD_REQUEST).send({message:"auth token not found"});
+
     const token = req.headers.authorization.split(" ")[1];
-    verifyAccessToken(token,process.env.EMAIL_SECRET)
+    verifyAccessToken(token,process.env.TOKEN_SECRET)
     .then((payload)=>{
         logger.debug('Token Verified');
-        req.userId=payload.id;
+        req.tokenPayload=payload;
         next();
     })
     .catch((err)=>{

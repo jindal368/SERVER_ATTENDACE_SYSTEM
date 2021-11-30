@@ -3,8 +3,9 @@ import dotenv from "dotenv";
 dotenv.config();
 import jwt from "jsonwebtoken";
 import HttpStatus from "http-status-codes";
+import logger from "../utils/logger.js";
 
-const secret = process.env.LOGIN_SECRET;
+const secret = process.env.TOKEN_SECRET;
 
 const auth = async (req, res, next) => {
   try {
@@ -17,17 +18,15 @@ const auth = async (req, res, next) => {
 
     if (token && isCustomAuth) {
       decodedData = jwt.verify(token, secret);
-
-      req.userId = decodedData?.id;
+      req.tokenPayload = decodedData;
     } else {
       decodedData = jwt.decode(token);
-
-      req.userId = decodedData?.sub;
+      req.tokenPayload = decodedData;
     }
-    console.log("middle : ", req.userId);
+    logger.debug(`middleware auth : ${req.tokenPayload.id}`);
     next();
   } catch (error) {
-    console.log(error.message);
+    logger.error(error.message);
     res.status(HttpStatus.BAD_REQUEST).send({message:error.message});
   }
 };
