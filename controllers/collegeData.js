@@ -7,6 +7,11 @@ import jwt from "jsonwebtoken";
 import facultyModal from "../models/faculty.js";
 import collegeData from "../models/collegeData.js";
 import logger from "../utils/logger.js";
+import {
+  sendVerificationMail,
+  sendForgotMail,
+  sendPasswordChangedAcknowledement,
+} from "../utils/apiUtils.js";
 const secret = "test";
 export const addCollege = async (req, res) => {
   try {
