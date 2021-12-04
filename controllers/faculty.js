@@ -56,7 +56,7 @@ export const signup = async (req, res) => {
     req.body;
 
   try {
-    if (await isAdminById(req.userId)) {
+    if (await isAdminById(req.tokenPayload.id)) {
       const oldFaculty = await facultyModal.findOne({ email });
 
       if (oldFaculty)
@@ -89,13 +89,16 @@ export const signup = async (req, res) => {
         result,
         message: `If your email is genuine then you will receive a verification mail. Please go and verify the account to enjoy services.`,
       });
+    } else {
+      res
+        .status(400)
+        .json({ message: "Logged in user is not an admin to add faculty" });
     }
   } catch (error) {
     logger.error(error);
     res.status(500).json({ message: "Something went wrong" });
   }
 };
-
 export const deleteFaculty = async (req, res) => {
   try {
     const id = req.tokenPayload.id;
