@@ -16,10 +16,11 @@ import HttpStatus from "http-status-codes";
 const secret = process.env.TOKEN_SECRET;
 
 export const signin = async (req, res) => {
+  const { id } = req.query;
   const { email, password } = req.body;
 
   try {
-    const oldFaculty = await facultyModal.findOne({ email });
+    const oldFaculty = await facultyModal.findOne({ email, collegeId: id });
 
     if (!oldFaculty)
       return res.status(404).json({ message: "faculty doesn't exist" });
