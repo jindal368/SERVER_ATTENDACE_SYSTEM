@@ -38,10 +38,11 @@ export const signin = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    const updatedSchema = await studentModal.updateOne(
+    const updatedSchema = await StudentModal.updateOne(
       { email: email },
       { $set: { currentLatitude: latitude, currentLongitude: longitude } }
     );
+    const updatedStudentSignedIn = await StudentModal.findOne({ email });
     const payload = {
       id: oldstudent._id,
       email: oldstudent.email,
@@ -51,7 +52,7 @@ export const signin = async (req, res) => {
     const token = jwt.sign(payload, secret, { expiresIn: "1d" });
 
     logger.debug("student verified, token generated");
-    res.status(200).json({ result: updatedSchema, token });
+    res.status(200).json({ result: updatedStudentSignedIn, token });
   } catch (err) {
     logger.error(`Error occured ${err.message}`);
     res.status(500).json({ message: "Something went wrong" });
@@ -60,7 +61,7 @@ export const signin = async (req, res) => {
 
 export const signup = async (req, res) => {
   logger.debug("inside signup api");
-  const { latitude, longtiude } = req.query;
+  const { latitude, longitude, id } = req.query;
   const {
     email,
     password,
@@ -97,7 +98,8 @@ export const signup = async (req, res) => {
       mobile,
       fathersMobile,
       currentLatitude: latitude,
-      currentLongitude: longtiude,
+      currentLongitude: longitude,
+      collegeId: id,
     });
 
     const payload = {
