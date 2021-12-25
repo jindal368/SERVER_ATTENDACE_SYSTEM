@@ -22,6 +22,9 @@ app.use("/attendance", attendanceRouter);
 const CONNECTION_URL = process.env.MONGO_URI;
 const PORT = process.env.PORT || 9010;
 
+app.get("/", (req, res) => {
+  res.send(`App is up and Running......${PORT}`);
+});
 mongoose
   .connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() =>

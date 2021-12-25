@@ -1,0 +1,109 @@
+2021-11-29T16:41:59.516Z: [34mdebug[39m: app is running :: listening at http://localhost:9010/
+2021-11-29T16:42:05.201Z: [34mdebug[39m: Successsfully connected to database
+2021-11-29T16:44:35.180Z: [31merror[39m: secretOrPrivateKey must have a value
+2021-11-29T16:47:45.232Z: [34mdebug[39m: app is running :: listening at http://localhost:9010/
+2021-11-29T16:47:49.936Z: [34mdebug[39m: Successsfully connected to database
+2021-11-29T16:48:26.116Z: [31merror[39m: Missing credentials for "PLAIN"
+2021-11-29T16:49:35.410Z: [34mdebug[39m: app is running :: listening at http://localhost:9010/
+2021-12-06T04:37:01.644Z: [34mdebug[39m: app is running :: listening at http://localhost:9000/
+2021-12-06T04:37:06.173Z: [34mdebug[39m: Successsfully connected to database
+2021-12-06T04:38:09.833Z: [34mdebug[39m: app is running :: listening at http://localhost:9000/
+2021-12-06T04:38:15.818Z: [34mdebug[39m: Successsfully connected to database
+2021-12-06T04:40:31.088Z: [34mdebug[39m: Inside student signin api
+2021-12-06T04:40:31.661Z: [34mdebug[39m: student not exists
+2021-12-06T04:41:16.591Z: [34mdebug[39m: Inside student signin api
+2021-12-06T04:41:18.676Z: [34mdebug[39m: student verified, token generated
+2021-12-06T04:41:47.922Z: [34mdebug[39m: Inside student signin api
+2021-12-06T04:41:50.069Z: [34mdebug[39m: student verified, token generated
+2021-12-06T04:58:54.608Z: [34mdebug[39m: Inside student signin api
+2021-12-06T04:58:57.110Z: [34mdebug[39m: student verified, token generated
+2021-12-06T05:14:17.703Z: [34mdebug[39m: token for email verification of faculty generated
+2021-12-06T05:14:22.614Z: [34mdebug[39m: verification mail sent to suhail786@gmail.com.
+2021-12-06T05:51:55.948Z: [34mdebug[39m: middleware auth : 61ab331b99b1732e55cdca6c
+2021-12-06T05:52:26.096Z: [34mdebug[39m: middleware auth : 61ab331b99b1732e55cdca6c
+2021-12-06T05:52:26.349Z: [34mdebug[39m: added attendence schema
+2021-12-06T05:52:26.430Z: [34mdebug[39m: middleware auth : 61ab331b99b1732e55cdca6c
+2021-12-06T05:52:36.555Z: [34mdebug[39m: middleware auth : 61ab331b99b1732e55cdca6c
+2021-12-06T05:53:25.837Z: [34mdebug[39m: middleware auth : 61ab331b99b1732e55cdca6c
+2021-12-06T05:54:39.782Z: [34mdebug[39m: Inside student signin api
+2021-12-06T05:54:41.240Z: [34mdebug[39m: student verified, token generated
+2021-12-06T05:56:13.038Z: [34mdebug[39m: middleware auth : 61ab331b99b1732e55cdca6c
+2021-12-06T05:56:47.126Z: [34mdebug[39m: Inside student signin api
+2021-12-06T05:56:48.540Z: [34mdebug[39m: student verified, token generated
+2021-12-06T05:57:56.138Z: [34mdebug[39m: Inside student signin api
+2021-12-06T05:57:57.522Z: [34mdebug[39m: student verified, token generated
+2021-12-06T06:01:11.224Z: [34mdebug[39m: middleware auth : 61aba8cb6a3edf5888605d71
+2021-12-06T06:07:26.290Z: [34mdebug[39m: Inside student signin api
+2021-12-06T06:07:27.678Z: [34mdebug[39m: student verified, token generated
+2021-12-06T06:07:59.761Z: [34mdebug[39m: middleware auth : 61aba8cb6a3edf5888605d71
+2021-12-06T06:08:00.215Z: [34mdebug[39m: StudentData : 
+2021-12-06T06:08:00.215Z: [34mdebug[39m: Attendance schema : 
+2021-12-06T06:11:26.174Z: [34mdebug[39m: inside signup api
+2021-12-06T06:11:27.355Z: [34mdebug[39m: token for email verification of student generated
+2021-12-06T06:11:30.277Z: [31merror[39m: Invalid login: 534-5.7.14 <https://accounts.google.com/signin/continue?sarp=1&scc=1&plt=AKgnsbs
+534-5.7.14 kthqtn9c5ztv01sCT5SMwSAWGpGqXiNvm2QAwv1DKy4LuuDQyNIb_VW3afA-2fEszuW3F
+534-5.7.14 USKNS_xTqxqntQQFp6POOR5j_fXQGHMoJsDRYdqySuaEbtVsEyja9B1m04S5GHXj>
+534-5.7.14 Please log in via your web browser and then try again.
+534-5.7.14  Learn more at
+534 5.7.14  https://support.google.com/mail/answer/78754 r21sm10346673pfh.128 - gsmtp
+2021-12-06T06:13:33.295Z: [34mdebug[39m: Inside student signin api
+2021-12-06T06:13:33.535Z: [34mdebug[39m: student not exists
+2021-12-06T06:15:05.315Z: [34mdebug[39m: inside signup api
+2021-12-06T06:15:06.595Z: [31merror[39m: E11000 duplicate key error collection: <dbname>.students index: rollNo_1 dup key: { rollNo: 180681217 }
+2021-12-06T06:15:29.638Z: [34mdebug[39m: inside signup api
+2021-12-06T06:15:30.855Z: [34mdebug[39m: token for email verification of student generated
+2021-12-06T06:15:32.327Z: [31merror[39m: Invalid login: 534-5.7.14 <https://accounts.google.com/signin/continue?sarp=1&scc=1&plt=AKgnsbv
+534-5.7.14 0wljOhU4IVR70xmg8pY3yGN9wLGUH8QPdBdK5ZENiD3Ss4plqvclnkhufEEJidTxZKd5P
+534-5.7.14 KWY4cGwkodPRVr-cGNW4EhoVKvZtgc7o3tR4E526MHMeXgaGk-BMUr6QyDC3z1ob>
+534-5.7.14 Please log in via your web browser and then try again.
+534-5.7.14  Learn more at
+534 5.7.14  https://support.google.com/mail/answer/78754 o9sm5663543pgs.65 - gsmtp
+2021-12-06T06:16:42.139Z: [34mdebug[39m: Inside student signin api
+2021-12-06T06:16:42.366Z: [31merror[39m: Error occured Illegal arguments: undefined, string
+2021-12-06T06:17:19.873Z: [34mdebug[39m: Inside student signin api
+2021-12-06T06:17:21.227Z: [34mdebug[39m: student verified, token generated
+2021-12-06T06:17:55.046Z: [34mdebug[39m: middleware auth : 61adaa823b28d819e035f2e3
+2021-12-06T06:17:55.501Z: [34mdebug[39m: StudentData : 
+2021-12-06T06:17:55.501Z: [34mdebug[39m: Attendance schema : 
+2021-12-06T06:22:22.222Z: [34mdebug[39m: app is running :: listening at http://localhost:9000/
+2021-12-06T06:22:24.760Z: [34mdebug[39m: Successsfully connected to database
+2021-12-06T06:23:30.476Z: [34mdebug[39m: middleware auth : 61ab331b99b1732e55cdca6c
+2021-12-06T06:23:30.788Z: [34mdebug[39m: added attendence schema
+2021-12-06T06:23:30.853Z: [34mdebug[39m: middleware auth : 61ab331b99b1732e55cdca6c
+2021-12-06T06:23:48.314Z: [34mdebug[39m: middleware auth : 61ab331b99b1732e55cdca6c
+2021-12-06T06:24:19.890Z: [34mdebug[39m: Inside student signin api
+2021-12-06T06:24:21.315Z: [34mdebug[39m: student verified, token generated
+2021-12-06T06:24:32.006Z: [34mdebug[39m: middleware auth : 61adaa823b28d819e035f2e3
+2021-12-06T06:24:32.075Z: [34mdebug[39m: middleware auth : 61adaa823b28d819e035f2e3
+2021-12-06T06:24:32.146Z: [34mdebug[39m: middleware auth : 61adaa823b28d819e035f2e3
+2021-12-06T06:24:32.246Z: [34mdebug[39m: middleware auth : 61adaa823b28d819e035f2e3
+2021-12-06T06:24:32.378Z: [34mdebug[39m: middleware auth : 61adaa823b28d819e035f2e3
+2021-12-06T06:24:32.469Z: [34mdebug[39m: StudentData : 
+2021-12-06T06:24:32.471Z: [34mdebug[39m: Attendance schema : 
+2021-12-06T06:24:32.540Z: [34mdebug[39m: StudentData : 
+2021-12-06T06:24:32.541Z: [34mdebug[39m: Attendance schema : 
+2021-12-06T06:24:32.704Z: [34mdebug[39m: StudentData : 
+2021-12-06T06:24:32.704Z: [34mdebug[39m: Attendance schema : 
+2021-12-06T06:24:32.769Z: [34mdebug[39m: StudentData : 
+2021-12-06T06:24:32.770Z: [34mdebug[39m: Attendance schema : 
+2021-12-06T06:24:32.936Z: [34mdebug[39m: StudentData : 
+2021-12-06T06:24:32.938Z: [34mdebug[39m: Attendance schema : 
+2021-12-06T06:51:52.923Z: [34mdebug[39m: token for email verification of faculty generated
+2021-12-06T06:51:57.414Z: [34mdebug[39m: verification mail sent to xyz@gmail.com.
+2021-12-06T06:57:44.199Z: [31merror[39m: jwt malformed
+2021-12-06T07:17:16.909Z: [34mdebug[39m: token for email verification of faculty generated
+2021-12-06T07:17:21.004Z: [34mdebug[39m: verification mail sent to c@gmail.com.
+2021-12-06T07:20:33.860Z: [34mdebug[39m: middleware auth : 61ab331b99b1732e55cdca6c
+2021-12-06T07:20:34.418Z: [34mdebug[39m: added attendence schema
+2021-12-06T07:20:34.446Z: [34mdebug[39m: middleware auth : 61ab331b99b1732e55cdca6c
+2021-12-06T07:20:54.775Z: [34mdebug[39m: middleware auth : 61ab331b99b1732e55cdca6c
+2021-12-06T07:21:32.320Z: [34mdebug[39m: Inside student signin api
+2021-12-06T07:21:34.942Z: [34mdebug[39m: student verified, token generated
+2021-12-06T07:23:00.065Z: [34mdebug[39m: middleware auth : 61aba8cb6a3edf5888605d71
+2021-12-06T07:23:00.794Z: [34mdebug[39m: StudentData : 
+2021-12-06T07:23:00.795Z: [34mdebug[39m: Attendance schema : 
+2021-12-25T04:13:52.205Z: [34mdebug[39m: app is running :: listening at http://localhost:9000/
+2021-12-25T04:13:57.772Z: [34mdebug[39m: Successsfully connected to database
+2021-12-25T04:15:26.159Z: [34mdebug[39m: Inside student signin api
+2021-12-25T04:15:28.166Z: [34mdebug[39m: student verified, token generated
+2021-12-25T04:16:06.821Z: [34mdebug[39m: middleware auth : 61aa100e3496667f7cc3f8e6
