@@ -24,6 +24,11 @@ app.use("/college", collegeRouter);
 app.use("/subject", subjectRouter);
 
 const PORT = process.env.PORT || 9010;
+
+app.get("/", (req, res) => {
+  res.send(`App is up and running.....${PORT}`);
+});
+
 app.listen(PORT, () => {
   logger.debug(`app is running :: listening at http://localhost:${PORT}/`);
   connect()
