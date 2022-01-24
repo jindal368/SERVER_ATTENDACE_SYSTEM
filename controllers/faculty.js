@@ -23,7 +23,7 @@ export const signin = async (req, res) => {
     const oldFaculty = await facultyModal.findOne({ email, collegeId: id });
 
     if (!oldFaculty)
-      return res.status(404).json({ message: "faculty doesn't exist" });
+      return res.status(201).json({ message: "faculty doesn't exist" });
 
     const isPasswordCorrect = await bcrypt.compare(
       password,
@@ -31,11 +31,11 @@ export const signin = async (req, res) => {
     );
 
     if (!isPasswordCorrect)
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(201).json({ message: "Invalid credentials" });
 
     if (!oldFaculty.isActive)
       return res
-        .status(404)
+        .status(201)
         .json({ message: "faculty exist but currently inactive" });
 
     const payload = {

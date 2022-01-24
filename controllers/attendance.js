@@ -11,8 +11,15 @@ export const postAttendanceData = async (req, res) => {
   try {
     if (req.tokenPayload.reason === globalConstants.LOGIN) {
       const { id, latitude, longitude } = req.query;
-      const { facultyEmail, subject, year, semester, section, course } =
-        req.body;
+      const {
+        facultyEmail,
+        subject,
+        year,
+        semester,
+        section,
+        course,
+        validTime,
+      } = req.body;
       const data = {
         facultyEmail,
         subject,
@@ -23,6 +30,7 @@ export const postAttendanceData = async (req, res) => {
         collegeId: id,
         latitude: latitude,
         longitude: longitude,
+        tempTime: validTime + 10000,
       };
 
       const attendanceSchema = await AttendanceModal.create(data);
@@ -37,10 +45,25 @@ export const postAttendanceData = async (req, res) => {
     logger.debug(error);
   }
 };
+
+export const updateTempTime = async (req, res) => {
+  try {
+    const { id } = req.query;
+    const updatedTempTime = await AttendanceModal.updateOne(
+      { _id: id },
+      { $set: { tempTime: Date.now() + 10000 } }
+    );
+    res.status(201).json({ message: "Time Updated", updatedTempTime });
+  } catch (error) {
+    res.status(500).json({ message: "Something Wrong Happened", error });
+  }
+};
+
 export const updateStudent = async (req, res) => {
   try {
     if (req.tokenPayload.reason === globalConstants.LOGIN) {
       const { _id, email } = req.query;
+
       if (await verfiyStudent(_id, email)) {
         const studentData = await studentModal.findOne({ email });
         const paramsForStudent = await AttendanceModal.findById(_id);

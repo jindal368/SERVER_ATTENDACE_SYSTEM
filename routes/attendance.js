@@ -10,6 +10,7 @@ import {
   getAttendanceDetailToAdmin,
   updateStudent,
   expireRetriveSubjectListing,
+  updateTempTime,
 } from "../controllers/attendance.js";
 import auth from "../middleware/auth.js";
 
@@ -23,5 +24,5 @@ router.get("/getdetailtoadmin", auth, getAttendanceDetailToAdmin);
 router.get("/fetchalllistbyfaculty", auth, getAllTheirAttendanceFaculty);
 router.patch("/updatestudent", auth, updateStudent);
 router.put("/expiresubject", auth, expireRetriveSubjectListing);
-
+router.put("/updatetemptime", auth, updateTempTime);
 export default router;

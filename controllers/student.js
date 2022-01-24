@@ -25,7 +25,7 @@ export const signin = async (req, res) => {
 
     if (!oldstudent) {
       logger.debug("student not exists");
-      return res.status(404).json({ message: "student doesn't exist" });
+      return res.status(201).json({ message: "student doesn't exist" });
     }
 
     const isPasswordCorrect = await bcrypt.compare(
@@ -35,7 +35,7 @@ export const signin = async (req, res) => {
 
     if (!isPasswordCorrect) {
       logger.debug("password not matched");
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(201).json({ message: "Invalid credentials" });
     }
 
     const updatedSchema = await StudentModal.updateOne(

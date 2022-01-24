@@ -109,7 +109,7 @@ export const getCollegeData = async (req, res) => {
     res.status(200).json({ collegeSchema });
   } catch (error) {
     console.log("Error : ", error);
-    res.status(500), json({ message: "Something Wrong Happened" });
+    res.status(500).json({ message: "Something Wrong Happened" });
   }
 };
 export const fetchAllCollege = async (req, res) => {

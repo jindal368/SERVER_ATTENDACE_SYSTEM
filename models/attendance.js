@@ -14,6 +14,7 @@ const attendanceSchema = mongoose.Schema({
   latitude: { type: Number, required: true },
   longitude: { type: Number, required: true },
   expire: { type: Boolean, default: false },
+  tempTime: { type: Number, required: true },
   students: { type: Array },
 });
 
